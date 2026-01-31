@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  kora-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kora-rent-reclaim-bot
+    restart: unless-stopped
+    
+    # Environment variables from .env file
+    env_file:
+      - .env
+    
+    # Volumes for persistent data
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./config:/app/config:ro
+    
+    # Port mapping for dashboard
+    ports:
+      - "${DASHBOARD_PORT:-3000}:3000"
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    
+    # Resource limits (adjust based on your needs)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# Optional: Prometheus monitoring
+# Uncomment if you want to add monitoring
+#   prometheus:
+#     image: prom/prometheus:latest
+#     container_name: prometheus
+#     volumes:
+#       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+#       - prometheus-data:/prometheus
+#     ports:
+#       - "9090:9090"
+#     restart: unless-stopped
+
+# Optional: Grafana dashboard
+#   grafana:
+#     image: grafana/grafana:latest
+#     container_name: grafana
+#     volumes:
+#       - grafana-data:/var/lib/grafana
+#       - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+#     ports:
+#       - "3001:3000"
+#     environment:
+#       - GF_SECURITY_ADMIN_PASSWORD=admin
+#     restart: unless-stopped
+
+volumes:
+  prometheus-data:
+  grafana-data:

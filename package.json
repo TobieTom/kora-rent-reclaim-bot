@@ -1,0 +1,72 @@
+{
+  "name": "kora-rent-reclaim-bot",
+  "version": "1.0.0",
+  "description": "Automated rent recovery system for Kora operators on Solana",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "jest",
+    "test:unit": "jest --testPathPattern=tests/unit",
+    "test:integration": "jest --testPathPattern=tests/integration",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:load": "tsx scripts/load-test.ts",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "type-check": "tsc --noEmit",
+    "cli": "tsx src/cli.ts",
+    "clean": "rm -rf dist coverage .nyc_output"
+  },
+  "keywords": [
+    "solana",
+    "kora",
+    "blockchain",
+    "automation",
+    "rent-reclaim",
+    "web3",
+    "defi"
+  ],
+  "author": "Tobias Oyedepo <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TobiasOyedepo/kora-rent-reclaim-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TobiasOyedepo/kora-rent-reclaim-bot/issues"
+  },
+  "homepage": "https://github.com/TobiasOyedepo/kora-rent-reclaim-bot#readme",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.95.0",
+    "@solana/spl-token": "^0.4.0",
+    "better-sqlite3": "^9.6.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "winston": "^3.11.0",
+    "commander": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/better-sqlite3": "^7.6.9",
+    "@types/jest": "^29.5.11",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "prettier": "^3.2.4"
+  }
+}
